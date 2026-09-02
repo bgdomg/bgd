@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric Dinu — Echipa de Fotbal</title>
+<style>
+  :root{
+    --bg-dark: #0b1120;
+    --bg-darker: #060a14;
+    --accent: #ffb703;
+    --accent-2: #06d6a0;
+    --accent-red: #ef476f;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.1);
+    --text-light: #f2f4f8;
+    --text-muted: #9aa5b8;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #142032 0%, var(--bg-dark) 40%, var(--bg-darker) 100%);
+    color: var(--text-light);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ===== HEADER ===== */
+  header.site-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 20px 5%;
+    background: rgba(6,10,20,0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--card-border);
+    position: sticky;
+    top:0;
+    z-index: 100;
+  }
+  .team-brand{ display:flex; align-items:center; gap:14px; }
+  .team-brand .crest{ width:64px; height:64px; }
+  .team-brand h1{ font-size: 1.4rem; letter-spacing: 0.5px; }
+  .team-brand span{ display:block; font-size:0.75rem; color: var(--text-muted); font-weight:400; }
+  nav{ display: flex; gap: 20px; }
+  nav a{ color: var(--text-muted); text-decoration:none; font-size:0.9rem; transition: color .2s; }
+  nav a:hover{ color: var(--accent); }
+
+  /* ===== CREST PLACEHOLDER =====
+     Pentru a inlocui emblema unui club, adauga o imagine (ex: steaua.png)
+     in acelasi folder si schimba `background-image` din regula CSS
+     corespunzatoare id-ului clubului mai jos (ex: #crest-steaua),
+     SAU inlocuieste continutul <div class="crest" id="crest-steaua">...</div>
+     cu <img src="steaua.png" class="crest" alt="Steaua">
+  */
+  .crest{
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    color:#fff;
+    flex-shrink:0;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .crest.small{ width:42px; height:42px; font-size:0.85rem; }
+  .crest.medium{ width:72px; height:72px; font-size:1.1rem; }
+  .crest.large{ width:100px; height:100px; font-size:1.6rem; }
+
+  /* Emblema oficială Eric Dinu — fundal alb + padding, ca sigla să iasă
+     în evidență pe fundalul închis al site-ului */
+  .crest.brand{
+    background: #ffffff;
+    padding: 3px;
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  }
+  .crest.brand img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  #crest-steaua{ background: linear-gradient(135deg, #d90429, #6a040f); }
+  #crest-dinamo{ background: linear-gradient(135deg, #ffffff10, #c9184a); color:#fff; }
+  #crest-rapid{ background: linear-gradient(135deg, #6a0572, #240046); }
+  #crest-craiova{ background: linear-gradient(135deg, #2b9348, #007f5f); }
+  #crest-petrolul{ background: linear-gradient(135deg, #fca311, #a15c00); }
+  #crest-css6{ background-image: url('https://scontent.fcra1-1.fna.fbcdn.net/v/t39.30808-6/326378308_1229230784332861_2677676798986331539_n.jpg?stp=dst-jpg_tt6&cstp=mx408x408&ctp=s408x408&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Wp3Rc4Q29xoQ7kNvwHPojzl&_nc_oc=Adoanuzzf96-gd9NfRVUpokjyS1_1RPGS-xqxGQuhTRMv2HrQriri9rr18KPQV4S_M0&_nc_zt=23&_nc_ht=scontent.fcra1-1.fna&_nc_gid=sHJsFaujPbf1B2Vy930cKQ&_nc_ss=7b2a8&oh=00_AQLWL_D0k67n9wpBohGsg0Xu-suKI1WdiJgoHt9gRSTDVQ&oe=6A9DD5EE'); }
+  #crest-inter-galaxy{ background-image: url('https://www.sfinxfootball.ro/wp-content/uploads/2022/02/inter-galaxy-sfinx-football-300x300.png'); }
+
+  /* ===== HERO SPLIT ===== */
+  .hero-split{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--card-border);
+    margin: 30px 5%;
+    border-radius: 20px;
+    overflow:hidden;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .hero-panel{
+    background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    padding: 32px;
+    position: relative;
+  }
+  .hero-panel .label{
+    font-size:0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap:8px;
+  }
+  .dot-live{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--accent-red);
+    box-shadow: 0 0 0 0 rgba(239,71,111,0.7);
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(239,71,111,0.6); }
+    70%{ box-shadow: 0 0 0 8px rgba(239,71,111,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(239,71,111,0); }
+  }
+
+  .matchup{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom: 22px;
+  }
+  .matchup .side{ display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; text-align:center; }
+  .matchup .side span{ font-weight:700; font-size:0.95rem; }
+  .matchup .vs{ color: var(--text-muted); font-weight:600; font-size:0.9rem; }
+
+  .match-meta{ text-align:center; color: var(--text-muted); font-size:0.85rem; margin-bottom: 20px; }
+  .match-meta strong{ color: var(--text-light); }
+
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap: 10px;
+  }
+  .countdown .box{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 8px;
+    min-width: 64px;
+    text-align:center;
+  }
+  .countdown .box .num{ font-size:1.6rem; font-weight:800; color: var(--accent); }
+  .countdown .box .unit{ font-size:0.65rem; text-transform:uppercase; color: var(--text-muted); letter-spacing:1px; }
+
+  .last-score{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 24px;
+    margin: 10px 0 20px;
+  }
+  .last-score .score{
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  .last-score .score .win{ color: var(--accent-2); }
+  .last-score .score .loss{ color: var(--accent-red); }
+  .last-score .score .draw{ color: var(--text-muted); }
+
+  .result-badge{
+    display:inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size:0.75rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing: 1px;
+  }
+  .result-badge.win{ background: rgba(6,214,160,0.15); color: var(--accent-2); }
+  .result-badge.loss{ background: rgba(239,71,111,0.15); color: var(--accent-red); }
+  .result-badge.draw{ background: rgba(154,165,184,0.15); color: var(--text-muted); }
+  .center-badge{ display:flex; justify-content:center; margin-bottom: 6px; }
+
+  /* ===== RESULTS SECTION ===== */
+  .section-title{
+    margin: 46px 5% 18px;
+    font-size:1.3rem;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-title::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background: var(--card-border);
+  }
+
+  .fixtures{
+    margin: 0 5% 50px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .fixture-card{
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition: transform .2s, border-color .2s;
+  }
+  .fixture-card:hover{ transform: translateY(-3px); border-color: rgba(255,183,3,0.4); }
+  .fixture-teams{ display:flex; align-items:center; gap:12px; }
+  .fixture-teams .names{ display:flex; flex-direction:column; gap:2px; }
+  .fixture-teams .names b{ font-size:0.95rem; }
+  .fixture-teams .names small{ color:var(--text-muted); font-size:0.75rem; }
+  .fixture-teams .names small.fixture-location{ color:#7d8aa3; font-size:0.72rem; }
+  .fixture-right{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
+  .fixture-score{ font-size:1.3rem; font-weight:800; }
+  .fixture-date{ color:var(--text-muted); font-size:0.8rem; text-align:right; }
+
+  .competition-tag{
+    display:inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size:0.65rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .competition-tag.campionat{ background: rgba(6,182,212,0.15); color: #22d3ee; }
+  .competition-tag.turneu{ background: rgba(168,85,247,0.15); color: #c084fc; }
+  .competition-tag.amical{ background: rgba(148,163,184,0.15); color: #cbd5e1; }
+  .competition-tag.cupa{ background: rgba(255,183,3,0.15); color: var(--accent); }
+  .competition-tag.ilfov-cup{ background: rgba(168,85,247,0.15); color: #c084fc; }
+  .competition-tag.ilfov-spring-cup{ background: rgba(168,85,247,0.15); color: #c084fc; }
+
+  /* ===== UPCOMING FIXTURES ===== */
+  .upcoming-fixture-card{
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform .2s, border-color .2s;
+  }
+  .upcoming-fixture-card:hover{ transform: translateY(-3px); border-color: rgba(255,183,3,0.4); }
+  .upcoming-match-header{ display: flex; align-items: center; justify-content: space-between; }
+  .upcoming-opponent{ display: flex; align-items: center; gap: 12px; }
+  .upcoming-opponent .crest{ width: 54px; height: 54px; }
+  .upcoming-opponent .info{ display: flex; flex-direction: column; gap: 4px; }
+  .upcoming-opponent .name{ font-size: 0.95rem; font-weight: 700; }
+  .upcoming-opponent .competition{ font-size: 0.7rem; color: var(--text-muted); }
+  .upcoming-details{ display: flex; flex-direction: column; gap: 8px; color: var(--text-muted); font-size: 0.85rem; }
+  .upcoming-details .time{ font-weight: 600; color: var(--accent); }
+  .upcoming-details .location{ font-size: 0.8rem; }
+
+  footer{
+    text-align:center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--card-border);
+  }
+
+  @media (max-width: 780px){
+    .hero-split{ grid-template-columns: 1fr; }
+    .countdown .box{ min-width: 52px; padding:10px 4px; }
+    .countdown .box .num{ font-size:1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="team-brand">
+    <div class="crest brand large" id="crest-ericdinu"><img src="https://scontent.fcra1-1.fna.fbcdn.net/v/t39.30808-6/722215916_1604290895032884_7075999269799280443_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=fDDFAE45V3kQ7kNvwH6u-Up&_nc_oc=AdphRzB07KplWfUFs9_EOgnbDeiYzlZEY8Gi2lW7IQvsIIVp0zTwZNK-3poSqRzoNgw&_nc_zt=23&_nc_ht=scontent.fcra1-1.fna&_nc_gid=HgIjudTi_7KLVxSde9xujw&_nc_ss=7b2a8&oh=00_AQLMVyNTVnQf7aWB9rOnE7sQwCZyDHRGPcDH_3jzqkBWLw&oe=6A9DD42D" alt="Eric Dinu"></div>
+    <div>
+      <h1>Eric Dinu 2018</h1>
+    </div>
+  </div>
+  <nav>
+    <a href="#rezultate">Rezultate</a>
+    <a href="#meciuri-viitoare">Urmatoarele meciuri</a>
+  </nav>
+</header>
+
+<section class="hero-split" id="urmatorul-meci">
+
+  <!-- PANOU STÂNGA: URMĂTORUL MECI + TIMER LIVE -->
+  <div class="hero-panel">
+    <div class="label">
+      <span>Următorul meci</span>
+      <span class="competition-tag campionat" id="next-match-competition-tag">Campionat</span>
+    </div>
+
+    <div class="matchup">
+      <div class="side">
+        <div class="crest medium brand" id="crest-ericdinu-next"><img src="https://scontent.fcra1-1.fna.fbcdn.net/v/t39.30808-6/722215916_1604290895032884_7075999269799280443_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=fDDFAE45V3kQ7kNvwH6u-Up&_nc_oc=AdphRzB07KplWfUFs9_EOgnbDeiYzlZEY8Gi2lW7IQvsIIVp0zTwZNK-3poSqRzoNgw&_nc_zt=23&_nc_ht=scontent.fcra1-1.fna&_nc_gid=HgIjudTi_7KLVxSde9xujw&_nc_ss=7b2a8&oh=00_AQLMVyNTVnQf7aWB9rOnE7sQwCZyDHRGPcDH_3jzqkBWLw&oe=6A9DD42D" alt="Eric Dinu"></div>
+        <span>Eric Dinu</span>
+      </div>
+      <div class="vs">VS</div>
+      <div class="side">
+        <div class="crest medium" id="crest-rapid">RA</div>
+        <span>Rapid</span>
+      </div>
+    </div>
+
+    <div class="match-meta">
+      <strong id="next-match-date">—</strong><br>
+      Baza D'Angelo, ora <span id="next-match-time">—</span>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <div class="box"><div class="num" id="cd-days">00</div><div class="unit">zile</div></div>
+      <div class="box"><div class="num" id="cd-hours">00</div><div class="unit">ore</div></div>
+      <div class="box"><div class="num" id="cd-mins">00</div><div class="unit">min</div></div>
+      <div class="box"><div class="num" id="cd-secs">00</div><div class="unit">sec</div></div>
+    </div>
+  </div>
+
+  <!-- PANOU DREAPTA: ULTIMUL REZULTAT -->
+  <div class="hero-panel">
+    <div class="label">
+      <span>Ultimul rezultat</span>
+      <span class="competition-tag turneu" id="last-match-competition-tag">Turneu</span>
+    </div>
+
+    <div class="matchup">
+      <div class="side">
+        <div class="crest medium brand" id="crest-ericdinu-last"><img src="https://scontent.fcra1-1.fna.fbcdn.net/v/t39.30808-6/722215916_1604290895032884_7075999269799280443_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=fDDFAE45V3kQ7kNvwH6u-Up&_nc_oc=AdphRzB07KplWfUFs9_EOgnbDeiYzlZEY8Gi2lW7IQvsIIVp0zTwZNK-3poSqRzoNgw&_nc_zt=23&_nc_ht=scontent.fcra1-1.fna&_nc_gid=HgIjudTi_7KLVxSde9xujw&_nc_ss=7b2a8&oh=00_AQLMVyNTVnQf7aWB9rOnE7sQwCZyDHRGPcDH_3jzqkBWLw&oe=6A9DD42D" alt="Eric Dinu"></div>
+        <span>Eric Dinu</span>
+      </div>
+      <div class="vs">VS</div>
+      <div class="side">
+        <div class="crest medium" id="crest-dinamo">DI</div>
+        <span>Dinamo</span>
+      </div>
+    </div>
+
+    <div class="center-badge"><span class="result-badge draw" id="last-result-badge">Egal</span></div>
+
+    <div class="last-score">
+      <div class="score"><span class="draw" id="last-score-us">0</span> — <span id="last-score-them">0</span></div>
+    </div>
+
+    <div class="match-meta" id="last-match-date" style="margin-bottom: 2px;">27 august 2026</div>
+    <div class="match-meta" style="font-size:0.8rem; margin-top:2px; margin-bottom:0;">Sabri Arena</div>
+  </div>
+
+</section>
+
+<h2 class="section-title" id="meciuri-viitoare">Meciuri viitoare</h2>
+
+<div class="fixtures" id="upcoming-fixtures-list">
+  <!-- generat automat de JS -->
+</div>
+
+<h2 class="section-title" id="rezultate">Rezultate</h2>
+
+<div class="fixtures" id="fixtures-list">
+  <!-- generat automat de JS -->
+</div>
+
+<footer>
+  All design rights go to bgd.
+</footer>
+
+<script>
+  // ===================================================================
+  // DATE MECIURI — editează liber acest array pentru a actualiza site-ul
+  // status: "played" (are scor) sau "upcoming" (are doar dată/oră)
+  // ===================================================================
+  const matches = [
+    { opponent: "Inter Galaxy", date: "2026-08-29T11:00:00", status: "played", scoreUs: 0, scoreThem: 8, competition: "ilfov-spring-cup", location: "Sabri Arena" },
+    { opponent: "CSS 6",    date: "2026-08-30T11:00:00", status: "played", scoreUs: 8, scoreThem: 1, competition: "ilfov-cup", location: "Sabri Arena" },
+    { opponent: "Cosmo Sport", date: "2026-09-06T14:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "Delta Sport 1", date: "2026-09-13T14:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "Delta Sport 2", date: "2026-09-20T15:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "Player", date: "2026-09-27T14:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "ATC Champion", date: "2026-10-04T15:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "Vulturii Sudului 1", date: "2026-10-11T14:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+    { opponent: "Vulturii Sudului 2", date: "2026-10-18T14:30:00", status: "upcoming", competition: "campionat", location: "Baza D'Angelo" },
+  ];
+
+  const competitionLabels = { campionat: "Campionat", turneu: "Turneu", amical: "Amical", cupa: "Cupă", "ilfov-cup": "Ilfov Summer Cup", "ilfov-spring-cup": "Ilfov Spring Cup" };
+
+  const initials = {
+    "Steaua": "ST", "Dinamo": "DI", "Rapid": "RA", "Craiova": "CR", "Petrolul": "PE", "CSS 6": "CS", "Cosmo Sport": "CO", "Inter Galaxy": "IG", "Delta Sport 1": "DS1", "Delta Sport 2": "DS2", "Player": "PL", "ATC Champion": "ATC", "Vulturii Sudului 1": "VS1", "Vulturii Sudului 2": "VS2"
+  };
+  const crestIds = {
+    "Steaua": "crest-steaua", "Dinamo": "crest-dinamo", "Rapid": "crest-rapid",
+    "Craiova": "crest-craiova", "Petrolul": "crest-petrolul", "CSS 6": "crest-css6", "Inter Galaxy": "crest-inter-galaxy", "Delta Sport 1": "crest-delta1", "Delta Sport 2": "crest-delta2", "Player": "crest-player", "ATC Champion": "crest-atc", "Vulturii Sudului 1": "crest-vs1", "Vulturii Sudului 2": "crest-vs2"
+  };
+  const teamColors = {
+    "Steaua": "linear-gradient(135deg, #d90429, #6a040f)",
+    "Dinamo": "linear-gradient(135deg, #ffffff10, #c9184a)",
+    "Rapid": "linear-gradient(135deg, #6a0572, #240046)",
+    "Craiova": "linear-gradient(135deg, #2b9348, #007f5f)",
+    "Petrolul": "linear-gradient(135deg, #fca311, #a15c00)",
+    "CSS 6": "url('https://scontent.fcra1-1.fna.fbcdn.net/v/t39.30808-6/326378308_1229230784332861_2677676798986331539_n.jpg?stp=dst-jpg_tt6&cstp=mx408x408&ctp=s408x408&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Wp3Rc4Q29xoQ7kNvwHPojzl&_nc_oc=Adoanuzzf96-gd9NfRVUpokjyS1_1RPGS-xqxGQuhTRMv2HrQriri9rr18KPQV4S_M0&_nc_zt=23&_nc_ht=scontent.fcra1-1.fna&_nc_gid=sHJsFaujPbf1B2Vy930cKQ&_nc_ss=7b2a8&oh=00_AQLWL_D0k67n9wpBohGsg0Xu-suKI1WdiJgoHt9gRSTDVQ&oe=6A9DD5EE')",
+    "Inter Galaxy": "url('https://www.sfinxfootball.ro/wp-content/uploads/2022/02/inter-galaxy-sfinx-football-300x300.png')",
+    "Delta Sport 1": "linear-gradient(135deg, #0d47a1, #1565c0)",
+    "Delta Sport 2": "linear-gradient(135deg, #d32f2f, #f57c00)",
+    "Player": "linear-gradient(135deg, #1b5e20, #388e3c)",
+    "ATC Champion": "linear-gradient(135deg, #ff6f00, #ffb300)",
+    "Vulturii Sudului 1": "linear-gradient(135deg, #6f1d77, #9c27b0)",
+    "Vulturii Sudului 2": "linear-gradient(135deg, #c62828, #e53935)"
+  };
+
+  const dateFmt = new Intl.DateTimeFormat("ro-RO", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const timeFmt = new Intl.DateTimeFormat("ro-RO", { hour: "2-digit", minute: "2-digit" });
+
+  function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  // ---- Găsește următorul meci (upcoming, cea mai apropiată dată) ----
+  const now = new Date();
+  const upcoming = matches
+    .filter(m => m.status === "upcoming")
+    .sort((a,b) => new Date(a.date) - new Date(b.date));
+  const nextMatch = upcoming[0];
+
+  if (nextMatch){
+    const d = new Date(nextMatch.date);
+    document.getElementById("next-match-date").textContent = capitalize(dateFmt.format(d));
+    document.getElementById("next-match-time").textContent = timeFmt.format(d);
+    const crestEl = document.querySelector('.hero-panel:first-child .side:last-child .crest');
+    crestEl.id = crestIds[nextMatch.opponent];
+    crestEl.textContent = initials[nextMatch.opponent];
+    document.querySelector('.hero-panel:first-child .side:last-child span').textContent = nextMatch.opponent;
+
+    // ---- Timer live ----
+    function updateCountdown(){
+      const diff = new Date(nextMatch.date) - new Date();
+      if (diff <= 0){
+        document.getElementById("countdown").innerHTML = "<div class='box'><div class='num'>—</div><div class='unit'>meciul a început</div></div>";
+        clearInterval(timerInterval);
+        return;
+      }
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff / (1000*60*60)) % 24);
+      const mins = Math.floor((diff / (1000*60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+      document.getElementById("cd-days").textContent = String(days).padStart(2,"0");
+      document.getElementById("cd-hours").textContent = String(hours).padStart(2,"0");
+      document.getElementById("cd-mins").textContent = String(mins).padStart(2,"0");
+      document.getElementById("cd-secs").textContent = String(secs).padStart(2,"0");
+    }
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+  } else {
+    document.querySelector(".hero-panel:first-child").innerHTML = "<div class='label'>Următorul meci</div><p style='color:var(--text-muted)'>Niciun meci programat momentan.</p>";
+  }
+
+  // ---- Găsește ultimul rezultat (played, cea mai recentă dată) ----
+  const played = matches
+    .filter(m => m.status === "played")
+    .sort((a,b) => new Date(b.date) - new Date(a.date));
+  const lastMatch = played[0];
+
+  if (lastMatch){
+    const d = new Date(lastMatch.date);
+    document.getElementById("last-match-date").textContent = capitalize(dateFmt.format(d));
+    const crestEl = document.querySelector('.hero-panel:last-child .side:last-child .crest');
+    crestEl.id = crestIds[lastMatch.opponent];
+    crestEl.textContent = initials[lastMatch.opponent];
+    document.querySelector('.hero-panel:last-child .side:last-child span').textContent = lastMatch.opponent;
+
+    document.getElementById("last-score-us").textContent = lastMatch.scoreUs;
+    document.getElementById("last-score-them").textContent = lastMatch.scoreThem;
+
+    // ---- Actualizează eticheta competiției ----
+    const competitionTag = document.getElementById("last-match-competition-tag");
+    competitionTag.textContent = competitionLabels[lastMatch.competition];
+    competitionTag.className = `competition-tag ${lastMatch.competition}`;
+
+    const badge = document.getElementById("last-result-badge");
+    const scoreUsEl = document.getElementById("last-score-us");
+    if (lastMatch.scoreUs > lastMatch.scoreThem){
+      badge.textContent = "Victorie"; badge.className = "result-badge win"; scoreUsEl.className = "win";
+    } else if (lastMatch.scoreUs < lastMatch.scoreThem){
+      badge.textContent = "Înfrângere"; badge.className = "result-badge loss"; scoreUsEl.className = "loss";
+    } else {
+      badge.textContent = "Egal"; badge.className = "result-badge draw"; scoreUsEl.className = "draw";
+    }
+  }
+
+  // ---- Generează lista de meciuri jucate ----
+  const fixturesList = document.getElementById("fixtures-list");
+  const sortedPlayed = matches
+    .filter(m => m.status === "played")
+    .sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  sortedPlayed.forEach(m => {
+    const d = new Date(m.date);
+    const card = document.createElement("div");
+    card.className = "fixture-card";
+
+    let resultClass = m.scoreUs === m.scoreThem ? "draw" : (m.scoreUs > m.scoreThem ? "win" : "loss");
+    const scoreHtml = `<div class="fixture-score" style="color:var(--${resultClass === 'win' ? 'accent-2' : resultClass === 'loss' ? 'accent-red' : 'text-muted'})">${m.scoreUs} - ${m.scoreThem}</div>`;
+    const dateHtml = `<div class="fixture-date">${capitalize(dateFmt.format(d))}</div>`;
+    const tagHtml = `<span class="competition-tag ${m.competition}">${competitionLabels[m.competition]}</span>`;
+
+    card.innerHTML = `
+      <div class="fixture-teams">
+        <div class="crest small">${initials[m.opponent]}</div>
+        <div class="names">
+          <b>Eric Dinu vs ${m.opponent}</b>
+          <small class="fixture-location">📍 ${m.location}</small>
+        </div>
+      </div>
+      <div class="fixture-right">
+        ${tagHtml}
+        ${scoreHtml}
+        ${dateHtml}
+      </div>
+    `;
+    // aplică aceeași culoare de fundal ca emblema principală a echipei
+    const listCrest = card.querySelector(`.fixture-teams .crest`);
+    listCrest.style.background = teamColors[m.opponent];
+
+    fixturesList.appendChild(card);
+  });
+
+  // ---- Generează lista de meciuri viitoare ----
+  const upcomingFixturesList = document.getElementById("upcoming-fixtures-list");
+  const sortedUpcoming = matches
+    .filter(m => m.status === "upcoming")
+    .sort((a,b) => new Date(a.date) - new Date(b.date));
+
+  sortedUpcoming.forEach(m => {
+    const d = new Date(m.date);
+    const card = document.createElement("div");
+    card.className = "upcoming-fixture-card";
+
+    const dateStr = capitalize(dateFmt.format(d));
+    const timeStr = timeFmt.format(d);
+    const tagHtml = `<span class="competition-tag ${m.competition}">${competitionLabels[m.competition]}</span>`;
+    const locationStr = m.location ? `📍 ${m.location}` : "Locație TBD";
+
+    card.innerHTML = `
+      <div class="upcoming-match-header">
+        <div class="upcoming-opponent">
+          <div class="crest small">${initials[m.opponent]}</div>
+          <div class="info">
+            <div class="name">Eric Dinu vs ${m.opponent}</div>
+            <div class="competition">${competitionLabels[m.competition]}</div>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-details">
+        <div><strong>Data:</strong> ${dateStr}</div>
+        <div class="time"><strong>Ora:</strong> ${timeStr}</div>
+        <div class="location"><strong>${locationStr}</strong></div>
+      </div>
+    `;
+
+    const listCrest = card.querySelector(`.upcoming-opponent .crest`);
+    listCrest.style.background = teamColors[m.opponent];
+
+    upcomingFixturesList.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
