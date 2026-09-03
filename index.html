@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric Dinu 2018</title>
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14191B;
+    --bg-elev: #1D2427;
+    --bg-elev-2: #232B2E;
+    --linie: #2B3538;
+    --text: #F1EEE6;
+    --text-dim: #97A29D;
+    --accent: #3FC2B0;
+    --accent-inchis: #1B4640;
+    --verde: #3FC2B0;
+    --verde-inchis: #1B4640;
+    --radius: 12px;
+    --max-w: 880px;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:'Karla', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+  }
+  h1,h2,.scor,.hero-echipe,.meci-data .zi{ font-family:'Oswald', sans-serif; }
+
+  a{ color:inherit; }
+
+  .container{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 18px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header.antet{
+    padding:22px 0 20px;
+    border-bottom:1px solid var(--linie);
+  }
+  .antet-inner{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .emblema{
+    width:52px;
+    height:52px;
+    flex:0 0 auto;
+    border-radius:50%;
+    overflow:hidden;
+    background:var(--bg-elev);
+    border:1px solid var(--linie);
+  }
+  .emblema svg, .emblema img{ width:100%; height:100%; display:block; object-fit:cover; }
+  .antet-text h1{
+    margin:0;
+    font-size:1.4rem;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .antet-text p{
+    margin:2px 0 0;
+    font-size:0.85rem;
+    color:var(--text-dim);
+  }
+
+  /* ---------- HERO: URMATORUL MECI ---------- */
+  .hero{ padding:26px 0 6px; }
+  .hero-card{
+    position:relative;
+    overflow:hidden;
+    background:var(--bg-elev);
+    border:1px solid var(--linie);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+  }
+  .hero-card::before{
+    content:"";
+    position:absolute;
+    top:-60px; right:-60px;
+    width:220px; height:220px;
+    background:radial-gradient(circle, rgba(63,194,176,0.20) 0%, rgba(63,194,176,0) 70%);
+    pointer-events:none;
+  }
+  .hero-eyebrow-in{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--text-dim);
+    letter-spacing:0.02em;
+    margin:0 0 14px;
+  }
+  .hero-eyebrow-in .punct{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#E5484D;
+    flex:0 0 auto;
+    box-shadow:0 0 0 3px rgba(229,72,77,0.22);
+    animation:clipeste 1.4s ease-in-out infinite;
+  }
+  @keyframes clipeste{
+    0%, 100% { opacity:1; }
+    50% { opacity:0.25; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-eyebrow-in .punct{ animation:none; }
+  }
+  .hero-etapa{
+    position:relative;
+    font-size:0.82rem;
+    color:var(--accent);
+    margin:0 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .hero-echipe{
+    position:relative;
+    display:flex;
+    align-items:baseline;
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    gap:8px;
+    margin-left:-1px;
+    font-size:clamp(0.98rem, 4.6vw, 1.55rem);
+    font-weight:600;
+  }
+  .hero-echipe .nume-echipa{
+    flex:1 1 auto;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .hero-echipe .nume-echipa.eric{
+    flex:0 0 auto;
+    color:var(--accent);
+  }
+  .hero-vs{
+    font-size:0.7em;
+    color:var(--text-dim);
+    flex:0 0 auto;
+  }
+  .hero-meta{
+    position:relative;
+    margin-top:16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 18px;
+    font-size:0.86rem;
+    color:var(--text-dim);
+  }
+  .hero-meta span{ display:flex; align-items:center; gap:6px; }
+
+  .countdown{
+    position:relative;
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--linie);
+  }
+  .countdown-seg{
+    flex:1;
+    text-align:center;
+    background:var(--bg-elev-2);
+    border:1px solid var(--linie);
+    border-radius:8px;
+    padding:8px 4px 7px;
+  }
+  .countdown-num{
+    font-size:1.35rem;
+    font-weight:600;
+    color:var(--accent);
+    line-height:1;
+  }
+  .countdown-label{
+    margin-top:3px;
+    font-size:0.63rem;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .countdown-gata{
+    position:relative;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--linie);
+    font-size:0.88rem;
+    color:var(--accent);
+  }
+  .fara-meciuri{
+    font-size:0.95rem;
+    color:var(--text-dim);
+    position:relative;
+  }
+
+  /* ---------- TABURI ---------- */
+  .taburi{
+    display:flex;
+    gap:6px;
+    margin:24px 0 14px;
+    background:var(--bg-elev);
+    border:1px solid var(--linie);
+    border-radius:999px;
+    padding:4px;
+  }
+  .tab-btn{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:var(--text-dim);
+    padding:9px 12px;
+    border-radius:999px;
+    font-family:'Karla', sans-serif;
+    font-size:0.88rem;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .tab-btn.activ{
+    background:var(--accent);
+    color:#04342C;
+  }
+
+  /* ---------- FILTRE ---------- */
+  .filtre-lista{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .filtru-btn{
+    border:1px solid var(--linie);
+    background:transparent;
+    color:var(--text-dim);
+    padding:6px 13px;
+    border-radius:999px;
+    font-family:'Karla', sans-serif;
+    font-size:0.8rem;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .filtru-btn.activ{
+    background:var(--verde-inchis);
+    border-color:var(--verde);
+    color:var(--text);
+  }
+
+  /* ---------- LISTE ---------- */
+  .lista-meciuri{ padding-bottom:8px; }
+  .lista-meciuri.ascuns{ display:none; }
+
+  .card-meci{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:13px 14px;
+    border:1px solid var(--linie);
+    border-radius:var(--radius);
+    margin-bottom:9px;
+    background:var(--bg-elev);
+  }
+  .card-meci.jucat{ background:var(--bg-elev-2); }
+  .card-meci.simplu{ padding:10px 14px; gap:0; }
+
+  .meci-data{
+    flex:0 0 66px;
+    text-align:center;
+    border-right:1px solid var(--linie);
+    padding-right:12px;
+  }
+  .meci-data .zi{
+    font-size:1.35rem;
+    font-weight:600;
+    line-height:1;
+    color:var(--accent);
+  }
+  .meci-data .luna{
+    font-size:0.68rem;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .meci-data .ora{
+    display:block;
+    margin-top:4px;
+    font-size:0.74rem;
+    color:var(--text-dim);
+  }
+
+  .meci-corp{ flex:1; min-width:0; }
+  .meci-echipe{
+    font-weight:700;
+    font-size:0.96rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .meci-echipe .eric{ color:var(--accent); }
+  .scor{
+    font-size:1rem;
+    font-weight:700;
+    color:#04342C;
+    background:var(--accent);
+    padding:1px 9px;
+    border-radius:6px;
+  }
+  .meci-sub{
+    margin-top:5px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px 12px;
+    font-size:0.78rem;
+    color:var(--text-dim);
+    align-items:center;
+  }
+
+  .tag{
+    display:inline-block;
+    font-size:0.7rem;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+
+  .gol{
+    padding:22px 16px;
+    text-align:center;
+    color:var(--text-dim);
+    border:1px dashed var(--linie);
+    border-radius:var(--radius);
+    font-size:0.88rem;
+  }
+
+  /* ---------- ALTE MECIURI (pe etape, collapsible) ---------- */
+  .etapa-grup{
+    margin-top:18px;
+    border:1px solid var(--linie);
+    border-radius:var(--radius);
+    background:var(--bg-elev);
+    overflow:hidden;
+  }
+  .etapa-grup:first-child{ margin-top:0; }
+  .etapa-titlu{
+    font-family:'Oswald', sans-serif;
+    font-size:1.05rem;
+    color:var(--accent);
+    margin:0;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    cursor:pointer;
+    user-select:none;
+    list-style:none;
+  }
+  .etapa-titlu::-webkit-details-marker{ display:none; }
+  .etapa-titlu::before{
+    content:"▸";
+    font-size:0.9rem;
+    color:var(--text-dim);
+    transition:transform 0.18s ease;
+    flex:0 0 auto;
+  }
+  .etapa-grup[open] .etapa-titlu::before{
+    transform:rotate(90deg);
+  }
+  .etapa-titlu .etapa-numar{ font-weight:700; letter-spacing:0.02em; }
+  .etapa-titlu .etapa-data{
+    font-family:'Karla', sans-serif;
+    font-size:0.78rem;
+    font-weight:400;
+    color:var(--text-dim);
+  }
+  .etapa-grup .etapa-continut{
+    padding:0 8px 10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  /* ---------- CLASAMENT ---------- */
+  .clasament-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .clasament-tabel{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--bg-elev);
+    border:1px solid var(--linie);
+    border-radius:var(--radius);
+    overflow:hidden;
+    font-size:0.92rem;
+  }
+  .clasament-tabel thead{ background:var(--bg-elev-2); }
+  .clasament-tabel th, .clasament-tabel td{
+    padding:10px 8px;
+    text-align:center;
+    border-bottom:1px solid var(--linie);
+  }
+  .clasament-tabel th{
+    font-family:'Oswald', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .clasament-tabel td.echipa, .clasament-tabel th.echipa{
+    text-align:left;
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .clasament-tabel tbody tr:last-child td{ border-bottom:none; }
+  .clasament-tabel tbody tr.leader td.puncte{ color:var(--accent); }
+  .clasament-tabel tbody tr.leader td.poz{ color:var(--accent); }
+  .clasament-tabel tbody tr.echipa-eric td.echipa{ color:var(--accent); }
+  .clasament-tabel tbody tr.echipa-eric td.puncte{ color:var(--accent); }
+  .clasament-tabel .poz{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    color:var(--text-dim);
+    width:32px;
+  }
+  .clasament-tabel .puncte{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+  }
+
+  footer{
+    margin-top:30px;
+    padding:20px 0 34px;
+    border-top:1px solid var(--linie);
+    font-size:0.8rem;
+    color:var(--text-dim);
+  }
+
+  @media (max-width:520px){
+    .meci-data{ flex-basis:54px; padding-right:9px; }
+    .card-meci{ padding:11px; gap:10px; }
+    .hero-card{ padding:18px 16px 18px; }
+    .countdown{ gap:6px; }
+    .countdown-seg{ padding:7px 2px 6px; }
+    .countdown-num{ font-size:1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="antet">
+  <div class="container antet-inner">
+    <!--
+      EMBLEMA: fisierul "logo.jpg" trebuie incarcat in acelasi folder cu
+      acest fisier HTML (langa el, nu intr-un subfolder), altfel emblema
+      nu se va vedea nici in header, nici ca favicon (vezi tag-ul <link
+      rel="icon"> din <head>, mai sus, care foloseste tot "logo.jpg").
+    -->
+    <div class="emblema">
+      <img src="logo.jpg" alt="Emblema Eric Dinu">
+    </div>
+    <div class="antet-text">
+      <h1>Eric Dinu 2018</h1>
+      <p>Program meciuri &amp; rezultate</p>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div id="hero-card"></div>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="taburi">
+    <button class="tab-btn" data-tab="viitoare">Meciuri viitoare</button>
+    <button class="tab-btn" data-tab="rezultate">Rezultate</button>
+    <button class="tab-btn" data-tab="alte">Alte meciuri</button>
+    <button class="tab-btn" data-tab="clasament">Clasament</button>
+  </div>
+
+  <div class="filtre-lista" id="filtre-lista"></div>
+
+  <div class="lista-meciuri" id="lista-viitoare"></div>
+  <div class="lista-meciuri ascuns" id="lista-rezultate"></div>
+  <div class="lista-meciuri ascuns" id="lista-alte"></div>
+  <div class="lista-meciuri ascuns" id="lista-clasament"></div>
+
+  <footer>
+    Meciurile de campionat se joacă pe <strong>Baza D'Angelo</strong>, cu excepția cazurilor marcate altfel. Locația fiecărui meci este notată individual pentru evidență, în cazul în care echipa joacă și pe alte terenuri sau în alte competiții.
+  </footer>
+
+</div>
+
+<script>
+/* =========================================================================
+   ZONA DE ACTUALIZAT — restul fisierului (HTML/CSS de mai sus si JS de mai
+   jos de aceasta linie) nu trebuie atins pentru actualizari normale.
+   =========================================================================
+
+   1) COMPETITII / TAGURI
+   Adauga sau modifica usor taguri noi aici. Cheia e numele afisat pe tag,
+   iar "culoare"/"text" sunt codurile de culoare de fundal, respectiv text.
+*/
+const COMPETITII = {
+  "Campionat":          { culoare: "#2E4A3D", text: "#DDEDE4" },
+  "Ilfov Summer Cup":   { culoare: "#7A3E1D", text: "#FBE6D4" },
+  // Exemplu de tag nou:
+  // "Cupa Toamnei":    { culoare: "#3D5A80", text: "#EDF2F7" },
+};
+
+/* 2) LOCATIA IMPLICITA — folosita cand un meci nu are "locatie" proprie. */
+const LOCATIE_IMPLICITA = "Baza D'Angelo";
+
+/* 3) MECIURILE
+   - "gazda" / "oaspete": numele echipelor, exact cum vrei sa apara
+   - "eric": scrie "gazda" sau "oaspete", dupa cine e Eric Dinu in acel meci
+   - "data": format "AAAA-LL-ZZ" (an-luna-zi)
+   - "ora": format "HH:MM"
+   - "competitie": trebuie sa fie o cheie existenta in COMPETITII de mai sus
+   - "locatie": optional; daca lipseste, se foloseste LOCATIE_IMPLICITA
+   - "jucat": pune "true" dupa ce s-a jucat meciul
+   - "scorEric" / "scorAdversar": completeaza-le cand "jucat" e "true"
+
+   PENTRU A ACTUALIZA UN SCOR dupa un meci: gaseste meciul dupa etapa,
+   schimba "jucat" pe true si completeaza cele doua scoruri. Site-ul il
+   muta automat din "Meciuri viitoare" in "Rezultate".
+
+   PENTRU UN MECI NOU JUCAT (ex. dintr-o alta competitie): adauga o linie
+   noua in lista, dupa acelasi model, cu "jucat:true" direct.
+*/
+const MECIURI = [
+  // --- Rezultate Ilfov Summer Cup (Sabri Arena) ---
+  { etapa:null, data:"2026-08-28", ora:"10:00", gazda:"Eric Dinu", oaspete:"Sabri",              eric:"gazda",   competitie:"Ilfov Summer Cup", locatie:"Sabri Arena", jucat:true, scorEric:8, scorAdversar:0 },
+  { etapa:null, data:"2026-08-28", ora:"11:00", gazda:"Inter Galaxy", oaspete:"Eric Dinu",        eric:"oaspete", competitie:"Ilfov Summer Cup", locatie:"Sabri Arena", jucat:true, scorEric:0, scorAdversar:9 },
+  { etapa:null, data:"2026-08-29", ora:"10:00", gazda:"Eric Dinu", oaspete:"CSS 6",               eric:"gazda",   competitie:"Ilfov Summer Cup", locatie:"Sabri Arena", jucat:true, scorEric:2, scorAdversar:8 },
+  { etapa:null, data:"2026-08-30", ora:"10:00", gazda:"Eric Dinu", oaspete:"Delta Sport 2019",    eric:"gazda",   competitie:"Ilfov Summer Cup", locatie:"Sabri Arena", jucat:true, scorEric:8, scorAdversar:1 },
+
+  // --- Campionat ---
+  { etapa:1,  data:"2026-09-06", ora:"13:30", gazda:"Eric Dinu", oaspete:"Metalul București 2",             eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:2,  data:"2026-09-13", ora:"13:30", gazda:"Cosmo Sport", oaspete:"Eric Dinu",          eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:3,  data:"2026-09-20", ora:"14:30", gazda:"Eric Dinu", oaspete:"Delta Sport",          eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:4,  data:"2026-09-27", ora:"14:30", gazda:"Player", oaspete:"Eric Dinu",               eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:5,  data:"2026-10-04", ora:"14:30", gazda:"Vulturii Sudului 1", oaspete:"Eric Dinu",   eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:6,  data:"2026-10-11", ora:"13:30", gazda:"Eric Dinu", oaspete:"Vulturii Sudului 2",   eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:7,  data:"2026-10-18", ora:"13:30", gazda:"Premier", oaspete:"Eric Dinu",              eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:8,  data:"2026-10-25", ora:"12:30", gazda:"Eric Dinu", oaspete:"Progresul Fundulea",   eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:9,  data:"2026-11-01", ora:"12:30", gazda:"Blue Lions", oaspete:"Eric Dinu",           eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:10, data:"2026-11-08", ora:"11:30", gazda:"Eric Dinu", oaspete:"VNG 1",                eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:11, data:"2026-11-15", ora:"11:30", gazda:"VNG 2", oaspete:"Eric Dinu",                eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:12, data:"2026-11-22", ora:"10:30", gazda:"Eric Dinu", oaspete:"Top Team",             eric:"gazda",   competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+  { etapa:13, data:"2026-11-29", ora:"10:30", gazda:"Metalul București 1", oaspete:"Eric Dinu",             eric:"oaspete", competitie:"Campionat", jucat:false, scorEric:null, scorAdversar:null },
+];
+
+/* 4) ALTE_MECIURI — meciurile celorlalte echipe din grupă (fără Eric Dinu)
+   - "etapa": numarul etapei (1..13)
+   - "data":  format "AAAA-LL-ZZ"
+   - "gazda" / "oaspete": numele echipelor
+   - "jucat": "true" dupa ce s-a jucat meciul
+   - "scorGazda" / "scorOaspete": scorurile finale (doar cand jucat:true)
+
+   Dupa un meci jucat: pune jucat:true si completeaza scorGazda/scorOaspete.
+   Clasamentul se recalculeaza automat.
+*/
+const ALTE_MECIURI = [
+  // Etapa 1 — Duminică 6.09.2026
+  { etapa:1,  data:"2026-09-06", gazda:"Blue Lions",          oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Progresul Fundulea", oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Premier",            oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Vulturii Sudului 2", oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Vulturii Sudului 1", oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Delta Sport",        oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:1,  data:"2026-09-06", gazda:"Eric Dinu",          oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 2 — Duminică 13.09.2026
+  { etapa:2,  data:"2026-09-13", gazda:"VNG 1",              oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"VNG 2",              oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"Top Team",           oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"Metalul 1",          oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"Metalul 2",          oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"Player",             oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:2,  data:"2026-09-13", gazda:"Cosmo Sport",        oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 3 — Duminică 20.09.2026
+  { etapa:3,  data:"2026-09-20", gazda:"VNG 1",              oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Blue Lions",         oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Progresul Fundulea", oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Premier",            oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Vulturii Sudului 2", oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Vulturii Sudului 1", oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:3,  data:"2026-09-20", gazda:"Eric Dinu",          oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 4 — Duminică 27.09.2026
+  { etapa:4,  data:"2026-09-27", gazda:"VNG 2",              oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Top Team",           oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Metalul 1",          oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Metalul 2",          oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Cosmo Sport",        oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Delta Sport",        oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:4,  data:"2026-09-27", gazda:"Player",             oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 5 — Duminică 4.10.2026
+  { etapa:5,  data:"2026-10-04", gazda:"VNG 2",              oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"VNG 1",              oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"Blue Lions",         oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"Progresul Fundulea", oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"Premier",            oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"Vulturii Sudului 2", oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:5,  data:"2026-10-04", gazda:"Vulturii Sudului 1", oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 6 — Duminică 11.10.2026
+  { etapa:6,  data:"2026-10-11", gazda:"Top Team",           oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Metalul 1",          oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Metalul 2",          oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Cosmo Sport",        oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Delta Sport",        oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Player",             oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:6,  data:"2026-10-11", gazda:"Eric Dinu",          oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 7 — Duminică 18.10.2026
+  { etapa:7,  data:"2026-10-18", gazda:"Player",             oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"VNG 2",              oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"VNG 1",              oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"Blue Lions",         oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"Progresul Fundulea", oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"Vulturii Sudului 2", oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:7,  data:"2026-10-18", gazda:"Premier",            oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 8 — Duminică 25.10.2026
+  { etapa:8,  data:"2026-10-25", gazda:"Metalul 1",          oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Metalul 2",          oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Cosmo Sport",        oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Delta Sport",        oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Vulturii Sudului 1", oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Vulturii Sudului 2", oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:8,  data:"2026-10-25", gazda:"Eric Dinu",          oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 9 — Duminică 1.11.2026
+  { etapa:9,  data:"2026-11-01", gazda:"Player",             oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"Top Team",           oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"VNG 2",              oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"VNG 1",              oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"Progresul Fundulea", oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"Premier",            oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:9,  data:"2026-11-01", gazda:"Blue Lions",         oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 10 — Duminică 8.11.2026
+  { etapa:10, data:"2026-11-08", gazda:"Metalul 2",          oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Cosmo Sport",        oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Delta Sport",        oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Vulturii Sudului 1", oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Vulturii Sudului 2", oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Premier",            oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:10, data:"2026-11-08", gazda:"Eric Dinu",          oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 11 — Duminică 15.11.2026
+  { etapa:11, data:"2026-11-15", gazda:"Player",             oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"Metalul 1",          oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"Top Team",           oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"VNG 1",              oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"Blue Lions",         oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"Progresul Fundulea", oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:11, data:"2026-11-15", gazda:"VNG 2",              oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 12 — Duminică 22.11.2026
+  { etapa:12, data:"2026-11-22", gazda:"Cosmo Sport",        oaspete:"Metalul 2",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Delta Sport",        oaspete:"Metalul 1",           jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Vulturii Sudului 1", oaspete:"VNG 2",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Vulturii Sudului 2", oaspete:"VNG 1",               jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Premier",            oaspete:"Blue Lions",          jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Progresul Fundulea", oaspete:"Player",              jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:12, data:"2026-11-22", gazda:"Eric Dinu",          oaspete:"Top Team",            jucat:false, scorGazda:null, scorOaspete:null },
+
+  // Etapa 13 — Duminică 29.11.2026
+  { etapa:13, data:"2026-11-29", gazda:"Player",             oaspete:"Cosmo Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"Metalul 2",          oaspete:"Delta Sport",         jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"Top Team",           oaspete:"Vulturii Sudului 1",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"VNG 2",              oaspete:"Vulturii Sudului 2",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"VNG 1",              oaspete:"Premier",             jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"Blue Lions",         oaspete:"Progresul Fundulea",  jucat:false, scorGazda:null, scorOaspete:null },
+  { etapa:13, data:"2026-11-29", gazda:"Metalul 1",          oaspete:"Eric Dinu",           jucat:false, scorGazda:null, scorOaspete:null },
+];
+
+/* 5) ECHIPELE DIN CLASAMENT
+   Toate echipele din ALTE_MECIURI, inclusiv Eric Dinu.
+*/
+const ECHIPE_CLASAMENT = [
+  "Eric Dinu",
+  "Blue Lions",
+  "Player",
+  "Progresul Fundulea",
+  "VNG 1",
+  "VNG 2",
+  "Premier",
+  "Top Team",
+  "Vulturii Sudului 1",
+  "Vulturii Sudului 2",
+  "Metalul 1",
+  "Metalul 2",
+  "Cosmo Sport",
+  "Delta Sport",
+];
+
+/* ========================= NU E NEVOIE SA MODIFICI SUB ACEASTA LINIE ==================== */
+
+const ZILE = ["Duminică","Luni","Marți","Miercuri","Joi","Vineri","Sâmbătă"];
+const LUNI_SCURT = ["ian","feb","mar","apr","mai","iun","iul","aug","sep","oct","noi","dec"];
+const LUNI_LUNG = ["ianuarie","februarie","martie","aprilie","mai","iunie","iulie","august","septembrie","octombrie","noiembrie","decembrie"];
+
+function parseData(m){
+  const [an, luna, zi] = m.data.split("-").map(Number);
+  const [h, min] = m.ora.split(":").map(Number);
+  return new Date(an, luna - 1, zi, h, min);
+}
+
+function tagHtml(numeCompetitie){
+  const c = COMPETITII[numeCompetitie] || { culoare:"#555", text:"#fff" };
+  return `<span class="tag" style="background:${c.culoare};color:${c.text}">${numeCompetitie}</span>`;
+}
+
+function locatieMeci(m){
+  return m.locatie ? m.locatie : LOCATIE_IMPLICITA;
+}
+
+function randCard(m){
+  const d = parseData(m);
+  const ziNume = ZILE[d.getDay()];
+  const scorGazda = m.eric === "gazda" ? m.scorEric : m.scorAdversar;
+  const scorOaspete = m.eric === "gazda" ? m.scorAdversar : m.scorEric;
+  const scorHtml = m.jucat
+    ? `<span class="scor">${scorGazda} - ${scorOaspete}</span>`
+    : "";
+
+  const numeGazda = m.gazda === "Eric Dinu" ? `<span class="eric">Eric Dinu</span>` : m.gazda;
+  const numeOaspete = m.oaspete === "Eric Dinu" ? `<span class="eric">Eric Dinu</span>` : m.oaspete;
+  const etapaTxt = m.etapa ? `Etapa ${m.etapa} · ` : "";
+
+  return `
+    <div class="card-meci ${m.jucat ? "jucat" : ""}">
+      <div class="meci-data">
+        <div class="zi">${String(d.getDate()).padStart(2,"0")}</div>
+        <div class="luna">${LUNI_SCURT[d.getMonth()]}</div>
+        <span class="ora">${m.ora}</span>
+      </div>
+      <div class="meci-corp">
+        <div class="meci-echipe">
+          <span>${numeGazda} – ${numeOaspete}</span>
+          ${scorHtml}
+        </div>
+        <div class="meci-sub">
+          <span>${etapaTxt}${ziNume}</span>
+          <span>${locatieMeci(m)}</span>
+          ${tagHtml(m.competitie)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function randHero(meci){
+  const heroEl = document.getElementById("hero-card");
+  if(!meci){
+    heroEl.innerHTML = `
+      <div class="hero-card">
+        <p class="hero-eyebrow-in"><span class="punct"></span>Următorul meci</p>
+        <p class="fara-meciuri">Nu mai sunt meciuri programate momentan.</p>
+      </div>
+    `;
+    return;
+  }
+  const d = parseData(meci);
+  const ziNume = ZILE[d.getDay()];
+  const numeGazda = meci.gazda === "Eric Dinu" ? `<span class="nume-echipa eric">Eric Dinu</span>` : `<span class="nume-echipa">${meci.gazda}</span>`;
+  const numeOaspete = meci.oaspete === "Eric Dinu" ? `<span class="nume-echipa eric">Eric Dinu</span>` : `<span class="nume-echipa">${meci.oaspete}</span>`;
+  const etapaTxt = meci.etapa ? `Etapa ${meci.etapa} · ` : "";
+
+  heroEl.innerHTML = `
+    <div class="hero-card">
+      <p class="hero-eyebrow-in"><span class="punct"></span>Următorul meci</p>
+      <p class="hero-etapa">${etapaTxt}${tagHtml(meci.competitie)}</p>
+      <div class="hero-echipe">
+        ${numeGazda}
+        <span class="hero-vs">vs</span>
+        ${numeOaspete}
+      </div>
+      <div class="hero-meta">
+        <span>📅 ${ziNume}, ${d.getDate()} ${LUNI_LUNG[d.getMonth()]} ${d.getFullYear()}</span>
+        <span>⏰ ${meci.ora}</span>
+        <span>📍 ${locatieMeci(meci)}</span>
+      </div>
+      <div id="hero-countdown"></div>
+    </div>
+  `;
+  pornesteNumaratoare(d);
+}
+
+let numaratoareInterval = null;
+
+function pornesteNumaratoare(dataTinta){
+  clearInterval(numaratoareInterval);
+
+  function actualizeaza(){
+    const cont = document.getElementById("hero-countdown");
+    if(!cont){ clearInterval(numaratoareInterval); return; }
+
+    let diferenta = dataTinta - new Date();
+    if(diferenta <= 0){
+      cont.innerHTML = `<div class="countdown-gata">🟢 Meciul e în desfășurare acum</div>`;
+      clearInterval(numaratoareInterval);
+      return;
+    }
+
+    const zile = Math.floor(diferenta / 86400000); diferenta -= zile * 86400000;
+    const ore = Math.floor(diferenta / 3600000); diferenta -= ore * 3600000;
+    const minute = Math.floor(diferenta / 60000); diferenta -= minute * 60000;
+    const secunde = Math.floor(diferenta / 1000);
+
+    cont.innerHTML = `
+      <div class="countdown">
+        <div class="countdown-seg"><div class="countdown-num">${zile}</div><div class="countdown-label">zile</div></div>
+        <div class="countdown-seg"><div class="countdown-num">${String(ore).padStart(2,"0")}</div><div class="countdown-label">ore</div></div>
+        <div class="countdown-seg"><div class="countdown-num">${String(minute).padStart(2,"0")}</div><div class="countdown-label">min</div></div>
+        <div class="countdown-seg"><div class="countdown-num">${String(secunde).padStart(2,"0")}</div><div class="countdown-label">sec</div></div>
+      </div>
+    `;
+  }
+
+  actualizeaza();
+  numaratoareInterval = setInterval(actualizeaza, 1000);
+}
+
+let filtruActiv = "Toate";
+let tabActiv = "viitoare";
+
+function randFiltre(){
+  const zona = document.getElementById("filtre-lista");
+  const competitiiFolosite = [...new Set(MECIURI.map(m => m.competitie))];
+  const toate = ["Toate", ...competitiiFolosite];
+
+  zona.innerHTML = toate.map(nume => `
+    <button class="filtru-btn ${nume === filtruActiv ? "activ" : ""}" data-filtru="${nume}">
+      ${nume}
+    </button>
+  `).join("");
+
+  zona.querySelectorAll(".filtru-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      filtruActiv = btn.dataset.filtru;
+      randTot();
+    });
+  });
+}
+
+function randTaburi(){
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.classList.toggle("activ", btn.dataset.tab === tabActiv);
+    btn.onclick = () => {
+      tabActiv = btn.dataset.tab;
+      randTot();
+    };
+  });
+  document.getElementById("lista-viitoare").classList.toggle("ascuns", tabActiv !== "viitoare");
+  document.getElementById("lista-rezultate").classList.toggle("ascuns", tabActiv !== "rezultate");
+  document.getElementById("lista-alte").classList.toggle("ascuns", tabActiv !== "alte");
+  document.getElementById("lista-clasament").classList.toggle("ascuns", tabActiv !== "clasament");
+}
+
+function randTot(){
+  const arataFiltre = (tabActiv === "viitoare" || tabActiv === "rezultate");
+  document.getElementById("filtre-lista").style.display = arataFiltre ? "" : "none";
+
+  randTaburi();
+
+  const meciuriFiltrate = filtruActiv === "Toate"
+    ? MECIURI
+    : MECIURI.filter(m => m.competitie === filtruActiv);
+
+  const viitoare = meciuriFiltrate.filter(m => !m.jucat).sort((a,b) => parseData(a) - parseData(b));
+  const jucate = meciuriFiltrate.filter(m => m.jucat).sort((a,b) => parseData(b) - parseData(a));
+
+  document.getElementById("lista-viitoare").innerHTML = viitoare.length
+    ? viitoare.map(randCard).join("")
+    : `<div class="gol">Nu sunt meciuri viitoare pentru acest filtru.</div>`;
+
+  document.getElementById("lista-rezultate").innerHTML = jucate.length
+    ? jucate.map(randCard).join("")
+    : `<div class="gol">Încă nu există rezultate pentru acest filtru.</div>`;
+
+  randAlteMeciuri();
+  randClasament();
+
+  const urmatorul = MECIURI.filter(m => !m.jucat).sort((a,b) => parseData(a) - parseData(b))[0];
+  randHero(urmatorul);
+
+  if(arataFiltre) randFiltre();
+}
+
+function parseAltaData(m){
+  const [an, luna, zi] = m.data.split("-").map(Number);
+  return new Date(an, luna - 1, zi);
+}
+
+function formatEtapaData(m){
+  const d = parseAltaData(m);
+  return `${ZILE[d.getDay()]} ${d.getDate()} ${LUNI_LUNG[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function randAlteMeciuriCard(m){
+  const scorHtml = m.jucat
+    ? `<span class="scor">${m.scorGazda} - ${m.scorOaspete}</span>`
+    : "";
+
+  const numeGazda = m.gazda === "Eric Dinu" ? `<span class="eric">Eric Dinu</span>` : m.gazda;
+  const numeOaspete = m.oaspete === "Eric Dinu" ? `<span class="eric">Eric Dinu</span>` : m.oaspete;
+
+  return `
+    <div class="card-meci simplu ${m.jucat ? "jucat" : ""}">
+      <div class="meci-corp">
+        <div class="meci-echipe">
+          <span>${numeGazda} – ${numeOaspete}</span>
+          ${scorHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function randAlteMeciuri(){
+  const zona = document.getElementById("lista-alte");
+  if(!zona) return;
+
+  const etape = [...new Set(ALTE_MECIURI.map(m => m.etapa))].sort((a,b) => a - b);
+  const azi = new Date();
+  azi.setHours(0,0,0,0);
+
+  const html = etape.map(nr => {
+    const meciuriEtape = ALTE_MECIURI
+      .filter(m => m.etapa === nr)
+      .sort((a,b) => {
+        const ericA = (a.gazda === "Eric Dinu" || a.oaspete === "Eric Dinu") ? 0 : 1;
+        const ericB = (b.gazda === "Eric Dinu" || b.oaspete === "Eric Dinu") ? 0 : 1;
+        if(ericA !== ericB) return ericA - ericB;
+        return a.data.localeCompare(b.data);
+      });
+
+    const dataEtapa = meciuriEtape[0] ? formatEtapaData(meciuriEtape[0]) : "";
+    const dataEtapaObj = meciuriEtape[0] ? parseAltaData(meciuriEtape[0]) : null;
+    const etapaTrebu = dataEtapaObj && dataEtapaObj < azi;
+    const openAttr = etapaTrebu ? "" : "open";
+
+    return `
+      <details class="etapa-grup" ${openAttr}>
+        <summary class="etapa-titlu">
+          <span class="etapa-numar">Etapa ${nr}</span>
+          <span class="etapa-data">${dataEtapa}</span>
+        </summary>
+        <div class="etapa-continut">
+          ${meciuriEtape.map(randAlteMeciuriCard).join("")}
+        </div>
+      </details>
+    `;
+  }).join("");
+
+  zona.innerHTML = html || `<div class="gol">Nu există meciuri programate.</div>`;
+}
+
+function calculeazaClasament(){
+  const clasament = {};
+  ECHIPE_CLASAMENT.forEach(nume => {
+    clasament[nume] = { echipa:nume, mj:0, v:0, e:0, i:0, p:0 };
+  });
+
+  ALTE_MECIURI.forEach(m => {
+    if(!m.jucat) return;
+    if(clasament[m.gazda] === undefined || clasament[m.oaspete] === undefined) return;
+
+    const sg = Number(m.scorGazda);
+    const so = Number(m.scorOaspete);
+
+    clasament[m.gazda].mj += 1;
+    clasament[m.oaspete].mj += 1;
+
+    if(sg > so){
+      clasament[m.gazda].v += 1;
+      clasament[m.gazda].p += 3;
+      clasament[m.oaspete].i += 1;
+    } else if(sg < so){
+      clasament[m.oaspete].v += 1;
+      clasament[m.oaspete].p += 3;
+      clasament[m.gazda].i += 1;
+    } else {
+      clasament[m.gazda].e += 1;
+      clasament[m.gazda].p += 1;
+      clasament[m.oaspete].e += 1;
+      clasament[m.oaspete].p += 1;
+    }
+  });
+
+  return Object.values(clasament).sort((a,b) => {
+    if(b.p !== a.p) return b.p - a.p;
+    if(b.v !== a.v) return b.v - a.v;
+    return a.echipa.localeCompare(b.echipa);
+  });
+}
+
+function randClasament(){
+  const zona = document.getElementById("lista-clasament");
+  if(!zona) return;
+
+  const date = calculeazaClasament();
+  const maxPuncte = date.length ? date[0].p : 0;
+
+  const randuri = date.map((row, idx) => {
+    const leader = (idx === 0 && maxPuncte > 0) ? "leader" : "";
+    const isEric = (row.echipa === "Eric Dinu") ? "echipa-eric" : "";
+    return `
+      <tr class="${leader} ${isEric}">
+        <td class="poz">${idx + 1}</td>
+        <td class="echipa">${row.echipa}</td>
+        <td>${row.mj}</td>
+        <td>${row.v}</td>
+        <td>${row.e}</td>
+        <td>${row.i}</td>
+        <td class="puncte">${row.p}</td>
+      </tr>
+    `;
+  }).join("");
+
+  zona.innerHTML = `
+    <div class="clasament-wrap">
+      <table class="clasament-tabel">
+        <thead>
+          <tr>
+            <th class="poz">#</th>
+            <th class="echipa">Echipă</th>
+            <th>MJ</th>
+            <th>V</th>
+            <th>E</th>
+            <th>I</th>
+            <th>P</th>
+          </tr>
+        </thead>
+        <tbody>${randuri || ""}</tbody>
+      </table>
+    </div>
+  `;
+
+  if(!date.length){
+    zona.innerHTML = `<div class="gol">Nu există echipe în clasament.</div>`;
+  }
+}
+
+randTot();
+</script>
+
+</body>
+</html>
