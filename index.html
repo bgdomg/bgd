@@ -644,11 +644,11 @@ function randTot(){
 
   document.getElementById("lista-viitoare").innerHTML = viitoare.length
     ? viitoare.map(randCard).join("")
-    : `<div class="gol">Nu sunt meciuri viitoare pentru acest filtru.</div>`;
+    : `<div class="gol">Nu sunt meciuri viitoare pentru aceasta competitie.</div>`;
 
   document.getElementById("lista-rezultate").innerHTML = jucate.length
     ? jucate.map(randCard).join("")
-    : `<div class="gol">Încă nu există rezultate pentru acest filtru.</div>`;
+    : `<div class="gol">Încă nu există rezultate pentru aceasta competitie.</div>`;
 
   const urmatorul = MECIURI.filter(m => !m.jucat).sort((a,b) => parseData(a) - parseData(b))[0];
   randHero(urmatorul);
